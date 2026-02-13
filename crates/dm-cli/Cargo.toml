@@ -1,0 +1,19 @@
+[package]
+name = "dm-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "docman"
+path = "src/main.rs"
+
+[dependencies]
+dm-meta = { path = "../dm-meta" }
+dm-scan = { path = "../dm-scan" }
+dm-checks = { path = "../dm-checks" }
+dm-index = { path = "../dm-index" }
+clap.workspace = true
+chrono.workspace = true
+serde_yaml.workspace = true
+regex.workspace = true

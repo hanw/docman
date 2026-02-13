@@ -1,0 +1,11 @@
+[package]
+name = "dm-meta"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+thiserror.workspace = true
+serde.workspace = true
+serde_yaml.workspace = true
+chrono.workspace = true

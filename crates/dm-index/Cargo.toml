@@ -1,0 +1,11 @@
+[package]
+name = "dm-index"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+dm-scan = { path = "../dm-scan" }
+dm-meta = { path = "../dm-meta" }
+chrono.workspace = true
+thiserror.workspace = true
