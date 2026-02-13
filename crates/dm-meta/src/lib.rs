@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 // Error
 // ---------------------------------------------------------------------------
 
+/// Errors that can occur during frontmatter parsing and document reading.
 #[derive(Debug, thiserror::Error)]
 pub enum MetaError {
     #[error("YAML parse error: {0}")]
@@ -24,32 +25,54 @@ pub enum MetaError {
 /// Raw frontmatter deserialized from YAML. All fields optional to handle
 /// any document category (active, design, research, archive).
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[serde(default)]
 pub struct RawFrontmatter {
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub version: Option<f64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub status: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub created: Option<NaiveDate>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub last_updated: Option<NaiveDate>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub author: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub owner: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub reviewers: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub next_review: Option<NaiveDate>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub tags: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub related_docs: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub supersedes: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub superseded_by: Option<String>,
     // Design doc specific
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub doc_id: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub decision_date: Option<NaiveDate>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub implementation_pr: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub related_issues: Option<Vec<u32>>,
     // Research specific
-    #[serde(rename = "type")]
+    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
     pub doc_type: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub may_become_design_doc: Option<bool>,
     // Archive specific
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub archived_date: Option<NaiveDate>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub archived_reason: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub historical_value: Option<String>,
 }
 
@@ -57,6 +80,7 @@ pub struct RawFrontmatter {
 // Category
 // ---------------------------------------------------------------------------
 
+/// Document category inferred from its file path.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Category {
@@ -113,6 +137,7 @@ pub enum ResearchStatus {
 // Document
 // ---------------------------------------------------------------------------
 
+/// A parsed document with its path, frontmatter, inferred category, and body.
 #[derive(Debug, Clone)]
 pub struct Document {
     pub path: PathBuf,
@@ -125,6 +150,7 @@ pub struct Document {
 // Validation
 // ---------------------------------------------------------------------------
 
+/// Severity level for validation issues.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Severity {
     Error,
@@ -132,6 +158,7 @@ pub enum Severity {
     Info,
 }
 
+/// A single validation issue found in a document's frontmatter.
 #[derive(Debug, Clone)]
 pub struct ValidationIssue {
     pub path: PathBuf,
@@ -264,6 +291,7 @@ const VALID_ACTIVE_STATUSES: &[&str] = &["active", "deprecated", "draft"];
 const VALID_DESIGN_STATUSES: &[&str] = &["proposed", "accepted", "implemented", "rejected"];
 const VALID_RESEARCH_STATUSES: &[&str] = &["draft", "published", "obsolete"];
 
+/// Validate a document's frontmatter and return any issues found.
 pub fn validate_frontmatter(doc: &Document) -> Vec<ValidationIssue> {
     let mut issues = Vec::new();
     let p = &doc.path;

@@ -7,6 +7,7 @@ use dm_meta::{Category, Document};
 // Error
 // ---------------------------------------------------------------------------
 
+/// An error encountered during directory scanning.
 #[derive(Debug, Clone)]
 pub struct ScanError {
     pub path: PathBuf,
@@ -23,6 +24,7 @@ impl std::fmt::Display for ScanError {
 // ScanFilter
 // ---------------------------------------------------------------------------
 
+/// Filter criteria for scanning documents. All specified fields must match (AND logic).
 #[derive(Debug, Clone, Default)]
 pub struct ScanFilter {
     pub categories: Option<Vec<Category>>,
@@ -32,6 +34,7 @@ pub struct ScanFilter {
 }
 
 impl ScanFilter {
+    /// Check whether a document matches all active filter criteria.
     pub fn matches(&self, doc: &Document) -> bool {
         if let Some(ref cats) = self.categories {
             if !cats.contains(&doc.category) {
@@ -64,6 +67,7 @@ impl ScanFilter {
 // DocTree
 // ---------------------------------------------------------------------------
 
+/// A scanned documentation tree containing parsed documents and any scan errors.
 pub struct DocTree {
     pub docs: Vec<Document>,
     pub errors: Vec<ScanError>,

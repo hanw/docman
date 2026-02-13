@@ -9,3 +9,6 @@ dm-scan = { path = "../dm-scan" }
 dm-meta = { path = "../dm-meta" }
 chrono.workspace = true
 thiserror.workspace = true
+
+[dev-dependencies]
+tempfile = "3"
