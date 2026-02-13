@@ -113,14 +113,18 @@ fn generate_index_with_date(tree: &DocTree, date: NaiveDate) -> String {
                     "accepted" => doc.frontmatter.decision_date
                         .map(|d| format!(" *accepted {d}*"))
                         .unwrap_or_default(),
-                    _ => doc.frontmatter.author.as_ref()
-                        .map(|a| format!(" *by {a}*"))
-                        .unwrap_or_default(),
+                    _ => {
+                        let author = doc.frontmatter.author.as_deref();
+                        let created = doc.frontmatter.created;
+                        match (author, created) {
+                            (Some(a), Some(d)) => format!(" *by {a}, {d}*"),
+                            (Some(a), None) => format!(" *by {a}*"),
+                            (None, Some(d)) => format!(" *{d}*"),
+                            (None, None) => String::new(),
+                        }
+                    }
                 };
-                let created = doc.frontmatter.created
-                    .map(|d| format!(", {d}"))
-                    .unwrap_or_default();
-                out.push_str(&format!("- [{prefix}{title}]({rp}){meta}{created}\n"));
+                out.push_str(&format!("- [{prefix}{title}]({rp}){meta}\n"));
             }
         }
     }
