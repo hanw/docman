@@ -7,7 +7,7 @@ A CLI tool for organizing, validating, and maintaining technical documentation w
 Requires Rust 1.70+ ([install Rust](https://rustup.rs/)).
 
 ```bash
-git clone https://github.com/strongdm/docman.git
+git clone https://github.com/hanw/docman.git
 cd docman
 cargo install --path crates/dm-cli
 ```
