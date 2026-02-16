@@ -3,6 +3,8 @@ name = "dm-meta"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+repository.workspace = true
+description = "YAML frontmatter parser and validator for technical documentation"
 
 [dependencies]
 thiserror.workspace = true

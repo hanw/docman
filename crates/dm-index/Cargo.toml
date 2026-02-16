@@ -3,10 +3,12 @@ name = "dm-index"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+repository.workspace = true
+description = "Index and changelog generator for documentation trees"
 
 [dependencies]
-dm-scan = { path = "../dm-scan" }
-dm-meta = { path = "../dm-meta" }
+dm-scan = { version = "0.1.0", path = "../dm-scan" }
+dm-meta = { version = "0.1.0", path = "../dm-meta" }
 chrono.workspace = true
 thiserror.workspace = true
 

@@ -3,9 +3,11 @@ name = "dm-checks"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+repository.workspace = true
+description = "Health checks for documentation: staleness, orphans, broken links"
 
 [dependencies]
-dm-scan = { path = "../dm-scan" }
-dm-meta = { path = "../dm-meta" }
+dm-scan = { version = "0.1.0", path = "../dm-scan" }
+dm-meta = { version = "0.1.0", path = "../dm-meta" }
 chrono.workspace = true
 thiserror.workspace = true

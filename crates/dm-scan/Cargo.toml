@@ -3,8 +3,10 @@ name = "dm-scan"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+repository.workspace = true
+description = "Document tree scanner for markdown files"
 
 [dependencies]
-dm-meta = { path = "../dm-meta" }
+dm-meta = { version = "0.1.0", path = "../dm-meta" }
 glob.workspace = true
 thiserror.workspace = true
